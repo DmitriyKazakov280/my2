@@ -19,7 +19,6 @@ def mask_account_card(card_number: str) -> str:
         # number_card_mask = number_s_card[:-12] + " " + number_s_card[-12:-10] + "** ****" + number_s_card[-4:]
         card_details_new = get_mask_card_number(number_s_card)
         result = f"{name_s_card} {card_details_new}"
-        # return name_numder
     else:
         # number_score_mask = "**" + number_s_card[-4:]
         new_number = get_mask_account(number_s_card)
