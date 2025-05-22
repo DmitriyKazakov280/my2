@@ -12,24 +12,34 @@ def mask_account_card(card_number: str) -> str:
         else:
             number_card.append(i)
 
-    name_s_card = " ".join(name_card)
+    name_s_card = "".join(name_card)
     number_s_card = "".join(number_card)
 
-    if len(number_s_card) == 16:
-        # number_card_mask = number_s_card[:-12] + " " + number_s_card[-12:-10] + "** ****" + number_s_card[-4:]
+    if len(number_s_card) == 16 and len(name_s_card) >= 3:
         card_details_new = get_mask_card_number(number_s_card)
-        result = f"{name_s_card} {card_details_new}"
-    else:
-        # number_score_mask = "**" + number_s_card[-4:]
+        return f"{name_s_card} {card_details_new}"
+    elif len(number_s_card) == 20 and len(name_s_card) >= 3:
         new_number = get_mask_account(number_s_card)
-        result = f"{name_s_card} {new_number}"
-    return result
+        return f"{name_s_card} {new_number}"
+    else:
+        return "Не верный номер!"
 
 
 def get_date(date_operation: str) -> str:
     """ Функция которая, принимает на вход строку с датой в
     формате "2024-03-11T02:26:18.671407" и
     возвращает строку с датой в формате "ДД.ММ.ГГГГ" """
+    new_data = date_operation[:10]
 
-    date_new = date_operation[8:10] + "." + date_operation[5:7] + "." + date_operation[:4]
-    return date_new
+    new_data_s = []
+
+    for i in new_data.split("-"):
+        if i.isdigit() == True and len(new_data) == 10:
+            new_data_s.append(i)
+        else:
+            return "Неверный формат"
+
+    if len(new_data_s) == 3:
+        return ".".join(reversed(new_data_s))
+    else:
+        return "Неверный формат"
